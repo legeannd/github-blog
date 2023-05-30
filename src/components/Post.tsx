@@ -1,34 +1,43 @@
+import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { Link } from 'react-router-dom'
-
-interface PostProps {
-  id: number
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import remarkGfm from 'remark-gfm'
+export interface PostCardProps {
+  created_at: string
+  body: string
+  title: string
+  url: string
+  number: number
 }
 
-export function Post({ id }: PostProps) {
+interface PostProps {
+  data: PostCardProps
+}
+
+export function Post({ data }: PostProps) {
+  dayjs.extend(relativeTime)
+  dayjs.locale('pt-br')
+
+  function formatDate(date: string) {
+    return dayjs(date).fromNow()
+  }
+
   return (
-    <Link to={`posts/${id}`}>
+    <Link to={`posts/${data.number}`}>
       <div className="h-60 cursor-pointer rounded-profile bg-base-post p-8">
-        <div className="items-top flex gap-2">
-          <span className="text-title text-xl text-base-title">
-            JavaScript data types and data structures
+        <div className="flex items-start gap-2">
+          <span className="text-title w-auto text-xl text-base-title">
+            {data.title}
           </span>
 
-          <span className="text-body w-16 text-sm text-base-span">
-            Há 1 dia
+          <span className="text-body text-right text-sm text-base-span">
+            {formatDate(data.created_at)}
           </span>
         </div>
         <p className="line-clamp-4 pt-5 text-base-text">
-          JavaScript data types and data structures Há 1 dia Programming
-          languages all have built-in data structures, but these often differ
-          from one language to another. This article attempts to list the
-          built-in data structures available in JavaScript and what properties
-          they have. These can be used to build other data structures. Wherever
-          possible, comparisons with other languages are drawn. Dynamic typing
-          JavaScript is a loosely typed and dynamic language. Variables in
-          JavaScript are not directly associated with any particular value type,
-          and any variable can be assigned (and re-assigned) values of all
-          types: let foo = 42; // foo is now a number foo = bar; // foo is now a
-          string foo = true; // foo is now a boolean
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{data.body}</ReactMarkdown>
         </p>
       </div>
     </Link>

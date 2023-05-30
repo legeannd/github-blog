@@ -1,13 +1,19 @@
-import { Post } from './Post'
+import { Post, PostCardProps } from './Post'
 
-export function Posts() {
+export interface PostsData {
+  items: Array<PostCardProps>
+  total_count: number
+}
+interface PostsProps {
+  posts: PostsData
+}
+
+export function Posts({ posts }: PostsProps) {
   return (
     <div className="grid w-[864px] grid-cols-2 gap-8 py-12">
-      {Array(10)
-        .fill(0)
-        .map((_, index) => (
-          <Post id={index} key={index} />
-        ))}
+      {posts.items.map((item) => (
+        <Post data={item} key={item.number} />
+      ))}
     </div>
   )
 }

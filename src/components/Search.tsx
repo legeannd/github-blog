@@ -1,9 +1,12 @@
-export function Search() {
+interface SearchProps {
+  postsCount: number
+}
+export function Search({ postsCount }: SearchProps) {
   return (
     <div className="flex w-[864px] flex-col gap-3 pt-18">
       <div className="flex w-full items-center justify-between ">
         <span className="text-lg text-base-subtitle">Publicações</span>
-        <span className="text-sm text-base-span">6 publicações</span>
+        <span className="text-sm text-base-span">{postsCount} publicações</span>
       </div>
 
       <input
