@@ -1,22 +1,30 @@
 import { useParams } from 'react-router-dom'
 import { PostHeader } from '../components/PostHeader'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import remarkGfm from 'remark-gfm'
 
 export function PostDetails() {
   const { id } = useParams()
+  const markdown = `A paragraph with *emphasis* and **strong importance**.
+
+  > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
+  
+  * Lists
+  * [ ] todo
+  * [x] done
+  
+  A table:
+  
+  | a | b |
+  | - | - |
+  `
 
   return (
     <>
       <PostHeader />
 
-      <div className="flex w-[864px] px-8 py-10 text-base-text">
-        Programming languages all have built-in data structures, but these often
-        differ from one language to another. This article attempts to list the
-        built-in data structures available in JavaScript and what properties
-        they have. These can be used to build other data structures. Wherever
-        possible, comparisons with other languages are drawn. Dynamic typing
-        JavaScript is a loosely typed and dynamic language. Variables in
-        JavaScript are not directly associated with any particular value type,
-        and any variable can be assigned (and re-assigned) values of all types:
+      <div className="w-[864px] px-8 py-10 text-base-text">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
       </div>
     </>
   )
