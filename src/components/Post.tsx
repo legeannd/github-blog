@@ -36,9 +36,9 @@ export function Post({ data }: PostProps) {
             {formatDate(data.created_at)}
           </span>
         </div>
-        <p className="line-clamp-4 pt-5 text-base-text">
+        <div className="line-clamp-4 pt-5 text-base-text">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{data.body}</ReactMarkdown>
-        </p>
+        </div>
       </div>
     </Link>
   )

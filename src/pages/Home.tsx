@@ -7,6 +7,11 @@ import api from '../services/api'
 export function Home() {
   const [userData, setUserData] = useState<UserData>()
   const [posts, setPosts] = useState<PostsData>()
+  const [searchString, setSearchString] = useState('')
+
+  function handleGetSearchString(str: string) {
+    setSearchString(str)
+  }
 
   useEffect(() => {
     async function loadUserData() {
@@ -18,17 +23,22 @@ export function Home() {
   }, [])
 
   useEffect(() => {
-    async function loadPosts() {
-      const posts = await api.get('/search/issues?q=repo:legeannd/github-blog')
+    const delayLoadPosts = setTimeout(async () => {
+      const posts = await api.get(
+        `/search/issues?q=${searchString}%20repo:legeannd/github-blog`,
+      )
       setPosts(posts.data)
-    }
+    }, 500)
 
-    loadPosts()
-  }, [])
+    return () => clearTimeout(delayLoadPosts)
+  }, [searchString])
   return (
     <>
       <Profile user={userData} />
-      <Search postsCount={posts?.total_count || 0} />
+      <Search
+        getSearchString={handleGetSearchString}
+        postsCount={posts?.total_count || 0}
+      />
       {posts && <Posts posts={posts} />}
     </>
   )
