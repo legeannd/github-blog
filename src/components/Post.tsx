@@ -1,9 +1,6 @@
-import dayjs from 'dayjs'
-import 'dayjs/locale/pt-br'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import { Link } from 'react-router-dom'
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import remarkGfm from 'remark-gfm'
+import { formatDateFromNow } from '../utils/format'
+import { MarkdownHandler } from './MarkdownHandler'
 export interface PostCardProps {
   created_at: string
   body: string
@@ -17,13 +14,6 @@ interface PostProps {
 }
 
 export function Post({ data }: PostProps) {
-  dayjs.extend(relativeTime)
-  dayjs.locale('pt-br')
-
-  function formatDate(date: string) {
-    return dayjs(date).fromNow()
-  }
-
   return (
     <Link to={`posts/${data.number}`}>
       <div className="h-60 cursor-pointer rounded-profile bg-base-post p-8">
@@ -33,11 +23,11 @@ export function Post({ data }: PostProps) {
           </span>
 
           <span className="text-body text-right text-sm text-base-span">
-            {formatDate(data.created_at)}
+            {formatDateFromNow(data.created_at)}
           </span>
         </div>
         <div className="line-clamp-4 pt-5 text-base-text">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{data.body}</ReactMarkdown>
+          <MarkdownHandler markdown={data.body} />
         </div>
       </div>
     </Link>
