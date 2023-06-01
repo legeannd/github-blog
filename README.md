@@ -29,6 +29,7 @@ This app uses the issues system from its GitHub repository to create blog posts,
 - [x] React
 - [x] Tailwind
 - [x] Axios
+- [x] React Router DOM
 - [x] React Markdown
 
 ## How to execute the project <a id="installation"></a>
@@ -70,6 +71,7 @@ Este aplicativo utiliza o sistema de issues do seu repositório no GitHub para c
 - [x] React
 - [x] Tailwind
 - [x] Axios
+- [x] React Router DOM
 - [x] React Markdown
 
 ## Como executar o projeto <a id="instalacao"></a>
